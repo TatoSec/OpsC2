@@ -1,11 +1,20 @@
 import subprocess
 import time
 
+
+# Tick Prompts [!] [*] [+]
+
+info = "[*]"
+success = "[+]"
+failure = "[!]"
+
 # ANSI escape codes for text formatting
 BOLD = "\033[1m"
+UNDERLINE = "\033[4m"
 RESET = "\033[0m"
 BLUE = "\033[34m"
 GREEN = "\033[32m"
+RED = "\033[31m"
 
 # UI Hacker Text
 def hacker_print(text, leading_spaces=0):
@@ -58,18 +67,20 @@ def nc_listener():
         print(f"Error: {e}")
 
 print(banner)
-hacker_print(f"{GREEN}Select the listener you want to initiate:")
-print('[1] Meterpreter')
-print('[2] Netcat')
+hacker_print(f"{GREEN}{info} Select the listener you want to initiate:")
+hacker_print(f'{GREEN}[1] Meterpreter')
+hacker_print(f'{GREEN}[2] ThreatCat (Netcat)')
 
-choice = input()
+choice = input(f"\n{UNDERLINE}{GREEN}OPSC2{RESET} ▶ ")
 
 if choice == "1":
-    hacker_print(f"{GREEN}Initiating Meterpreter listener...")
+    print(f"\n{GREEN}Initiating Meterpreter listener...")
     meterpreter_listener()
 elif choice == "2":
-    hacker_print(f"{GREEN}Initiating Netcat listener...")
+    print(f"\n{GREEN}Initiating ThreatCat listener...")
     nc_listener()
 else:
     hacker_print(f"{GREEN}Invalid choice. Exiting...")
+
+
 
